@@ -24,7 +24,7 @@ pub fn App() -> impl IntoView {
                         <StaticList length=10/>
                         <DivRendering/>
                     }>
-                        <Route path="img" view=move || view! { <ImageCarousel images=images.clone()/> } />
+                        <Route path="" view=move || view! { <ImageCarousel images=images.clone()/> } />
                     </Route>
                     // <Route path="/img" view=move || view! { <ImageCarousel images=images.clone()/> } />
                 </Routes>
