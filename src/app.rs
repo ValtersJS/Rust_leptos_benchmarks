@@ -1,6 +1,7 @@
 use leptos::set_interval;
 use leptos::*;
 use leptos_router::*;
+use rand::Rng;
 use std::time::Duration;
 use web_sys::window;
 
@@ -144,27 +145,86 @@ fn ImageCarousel(images: Vec<String>) -> impl IntoView {
 
 #[component]
 fn MassiveUpdates(length: usize) -> impl IntoView {
-    // Create a signal to hold the items, initialized with the range from 0 to length
-    let (items, set_items) = create_signal((0..length).collect::<Vec<_>>());
+    // Signal to store items, initialized with doubled values
+    let (items, set_items) = create_signal((0..length).map(|x| x * 2).collect::<Vec<_>>());
 
-    // Effect to update the items every 100ms
+    // Signal to hold selected items
+    let (selected_items, set_selected_items) = create_signal(Vec::new());
+
+    // Error signal to handle any potential errors
+    let (error, set_error) = create_signal(None::<String>);
+
+    // Simulate heavy computations and selective updates every 100ms
     set_interval(
         move || {
-            set_items.update(|items| {
-                for item in items.iter_mut() {
-                    *item += 1;
+            let mut rng = rand::thread_rng();
+            let random_index = rng.gen_range(0..length);
+
+            // Simulate updating a random subset of items
+            set_items.update(move |items| {
+                if random_index < items.len() {
+                    let updated_value = items[random_index].wrapping_add(1);
+                    items[random_index] = updated_value;
+
+                    // Handle a scenario that might cause an error (e.g., exceeding a certain value)
+                    if updated_value > 100 {
+                        set_error(Some(format!(
+                            "Error: Value {} exceeded safe limit!",
+                            updated_value
+                        )));
+                    } else {
+                        set_error(None);
+                    }
                 }
             });
         },
         Duration::from_millis(100),
     );
 
-    // Render the list of items
+    // User interaction to select items (demonstrating borrowing and ownership)
+    let handle_select = move |index: usize| {
+        set_selected_items.update(move |selected| {
+            if selected.contains(&index) {
+                selected.retain(|&i| i != index); // Remove if already selected
+            } else {
+                selected.push(index); // Add if not selected
+            }
+        });
+    };
+
+    // Render component
     view! {
         <div>
-            {move || items.get().iter().map(|&item| view! {
-                <div class="item">{item}</div>
-            }).collect::<Vec<_>>()}
+            <h1>"Enhanced Massive Updates Showcase"</h1>
+            <p>"This version introduces selective updates, random heavy computations, and error handling."</p>
+
+            // Show potential error message
+            {move || if let Some(err) = error.get() {
+                view! { <div class="error" style="color: red;">{err}</div> }
+            } else {
+                view! { <div></div> }
+            }}
+
+            <div class="items">
+                {move || items.get().iter().enumerate().map(|(index, &item)| {
+                    let is_selected = selected_items.get().contains(&index);
+                    view! {
+                        <div class="item" on:click=move |_| handle_select(index) style={format!("background-color: {};", if is_selected { "lightgreen" } else { "white" })}>
+                            {format!("Item {}: {}", index, item)}
+                        </div>
+                    }
+                }).collect::<Vec<_>>()}
+            </div>
+
+            // Show the selected items list
+            <h2>"Selected Items"</h2>
+            <ul>
+                {move || selected_items.get().iter().map(|&index| {
+                    view! {
+                        <li>{format!("Item {} selected", index)}</li>
+                    }
+                }).collect::<Vec<_>>()}
+            </ul>
         </div>
     }
 }

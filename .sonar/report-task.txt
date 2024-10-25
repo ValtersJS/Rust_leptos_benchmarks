@@ -1,0 +1,6 @@
+projectKey=rust
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=rust
+ceTaskId=5f9a88b1-55db-42eb-a66d-4a808f3f0b85
+ceTaskUrl=http://localhost:9000/api/ce/task?id=5f9a88b1-55db-42eb-a66d-4a808f3f0b85
