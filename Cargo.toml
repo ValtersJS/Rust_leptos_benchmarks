@@ -11,3 +11,9 @@ console_log = "0.2.2"
 leptos = { version = "0.6.11", features = ["csr", "nightly"] }
 leptos_router = { version = "0.6.12", features = ["csr"] }
 rand = "0.8"
+winapi = { version = "0.3", features = ["winbase", "psapi"] }
+rayon = "1.5"
+
+[[bin]]
+name = "tests"
+path = "src/bin/tests.rs"
