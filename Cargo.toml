@@ -13,7 +13,12 @@ leptos_router = { version = "0.6.12", features = ["csr"] }
 rand = "0.8"
 winapi = { version = "0.3", features = ["winbase", "psapi"] }
 rayon = "1.5"
+heapsize = "0.4.2"
+sysinfo = "0.29"
 
-[[bin]]
-name = "tests"
-path = "src/bin/tests.rs"
+memory-stats = "1.2.0"
+
+
+
+
+

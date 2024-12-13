@@ -1,0 +1,6 @@
+projectKey=newrust
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=newrust
+ceTaskId=c2fca997-61c6-40f7-a2e6-62106f58947a
+ceTaskUrl=http://localhost:9000/api/ce/task?id=c2fca997-61c6-40f7-a2e6-62106f58947a

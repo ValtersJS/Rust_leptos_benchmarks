@@ -1,0 +1,28 @@
+{
+  "rules": [
+    {
+      "id": "clippy::E0554",
+      "name": "E0554",
+      "description": "`#![feature]` may not be used on the stable release channel",
+      "engineId": "clippy",
+      "cleanCodeAttribute": "CLEAR",
+      "impacts": [{ "softwareQuality": "MAINTAINABILITY", "severity": "HIGH" }]
+    }
+  ],
+  "issues": [
+    {
+      "ruleId": "clippy::E0554",
+      "primaryLocation": {
+        "message": "`#![feature]` may not be used on the stable release channel",
+        "filePath": "/home/valters/.cargo/registry/src/index.crates.io-6f17d22bba15001f/server_fn_macro-0.6.12/src/lib.rs",
+        "textRange": {
+          "startLine": 1,
+          "endLine": 1,
+          "startColumn": 41,
+          "endColumn": 56
+        }
+      },
+      "secondaryLocations": []
+    }
+  ]
+}
